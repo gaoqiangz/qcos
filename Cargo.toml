@@ -1,10 +1,10 @@
 [package]
 name = "qcos"
-version = "0.1.6"
+version = "0.1.6-rc.1"
 edition = "2021"
 authors = ["bujnlc8 <75124771@qq.com>"]
-description = "provide basic interface encapsulation of Tencent Cloud Object Storage (cos)"
-repository = "https://github.com/bujnlc8/qcos"
+description = "[FORK] provide basic interface encapsulation of Tencent Cloud Object Storage (cos)"
+repository = "https://github.com/gaoqiangz/qcos"
 license = "MIT"
 keywords = ["cos", "tengxunyun", "tencentcloud"]
 

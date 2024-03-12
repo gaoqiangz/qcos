@@ -17,6 +17,7 @@ pub struct Client {
     secrect_key: String,
     bucket: String,
     region: String,
+    pub(crate) speed_limiter: async_speed_limit::Limiter,
 }
 
 impl Client {
@@ -31,6 +32,23 @@ impl Client {
             secrect_key: secrect_key.into(),
             bucket: bucket.into(),
             region: region.into(),
+            speed_limiter: async_speed_limit::Limiter::new(f64::INFINITY),
+        }
+    }
+
+    pub fn with_limiter(
+        secrect_id: impl Into<String>,
+        secrect_key: impl Into<String>,
+        bucket: impl Into<String>,
+        region: impl Into<String>,
+        speed_limiter: async_speed_limit::Limiter,
+    ) -> Self {
+        Self {
+            secrect_id: secrect_id.into(),
+            secrect_key: secrect_key.into(),
+            bucket: bucket.into(),
+            region: region.into(),
+            speed_limiter,
         }
     }
 

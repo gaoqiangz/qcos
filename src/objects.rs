@@ -11,6 +11,7 @@ pub use reqwest::Body;
 use std::collections::HashMap;
 use std::fs;
 use std::io::Cursor;
+use tokio_util::io::ReaderStream;
 
 #[async_trait::async_trait]
 pub trait Objects {
@@ -138,13 +139,17 @@ impl Objects for client::Client {
         let url_path = self.get_path_from_object_key(key);
         headers =
             self.get_headers_with_auth("put", url_path.as_str(), acl_header, Some(headers), None);
+
+        let body =
+            reqwest::Body::wrap_stream(ReaderStream::new(self.speed_limiter.clone().limit(file)));
+
         let resp = Request::put(
             self.get_full_url_from_path(url_path.as_str()).as_str(),
             None,
             Some(&headers),
             None,
             None,
-            Some(file),
+            Some(body),
         )
         .await;
         self.make_response(resp)
@@ -478,6 +483,11 @@ impl Objects for client::Client {
             Some(headers),
             Some(&query),
         );
+
+        let body = reqwest::Body::wrap_stream(ReaderStream::new(
+            self.speed_limiter.clone().limit(Cursor::new(body)),
+        ));
+
         let resp = Request::put(
             self.get_full_url_from_path(url_path.as_str()).as_str(),
             Some(&query),

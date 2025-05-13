@@ -1,6 +1,6 @@
 [package]
 name = "qcos"
-version = "0.1.6-rc.2"
+version = "0.1.6-rc.3"
 edition = "2021"
 authors = ["bujnlc8 <75124771@qq.com>"]
 description = "[FORK] provide basic interface encapsulation of Tencent Cloud Object Storage (cos)"
@@ -9,7 +9,7 @@ license = "MIT"
 keywords = ["cos", "tengxunyun", "tencentcloud"]
 
 [dependencies]
-reqwest = { version = "0.11", features = ["json", "stream"] }
+reqwest = { version = "0.12.12", features = ["json", "stream"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1.0"
 chrono = "0.4.19"
